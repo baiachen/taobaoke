@@ -63,8 +63,9 @@ class GateWay
         try {
             $resp = Helpers::curl_post($this->unionUrl, $data);
             $info = json_decode($resp, true);
-            var_dump($info);
+
             if (isset($info['error_response'])) {
+                var_dump($info);
                 $this->taoBaoKe->setError($info['error_response']['code']  . '&' . $info['error_response']['msg'] );
                 return false;
             }

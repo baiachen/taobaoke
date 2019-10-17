@@ -1,32 +1,11 @@
 <?php
 
-namespace TaobaoUnionSdk\Api;
+namespace TaoBaoKe\Api;
 
-use TaobaoUnionSdk\Tools\GateWay;
+use TaoBaoKe\Tools\GateWay;
 
 class Item extends GateWay
 {
-
-    /**
-     * taobao.tbk.item.get( 淘宝客商品查询 )
-     * @link https://open.taobao.com/api.htm?docId=24515&docType=2
-     * @param array $param
-     * @return bool|mixed
-     */
-    public function get(array $param)
-    {
-        if (!isset($param['fields'])) {
-            $param['fields'] = 'num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,seller_id,volume,nick';
-        }
-        $result = $this->send('taobao.tbk.item.get', $param);
-        if (empty($result)) {
-            return $result;
-        }
-        return [
-            'lists' => $result['results']['n_tbk_item'],
-            'total' => $result['total_results']
-        ];
-    }
 
     /**
      * taobao.tbk.item.recommend.get( 淘宝客商品关联推荐查询 )
@@ -37,29 +16,26 @@ class Item extends GateWay
     public function getRecommend(array $param)
     {
         if (!isset($param['fields'])) {
-            $param['fields'] = 'num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url';
+            $param['fields'] = 'num_iid,title,pict_url,small_images,reserve_price,zk_final_price,user_type,provcity,item_url,nick,volume';
         }
+
         $result = $this->send('taobao.tbk.item.recommend.get', $param);
+
         return isset($result['results']['n_tbk_item']) ? $result['results']['n_tbk_item'] : false;
     }
 
+
     /**
-     * taobao.tbk.item.info.get (淘宝客商品详情（简版）)
+     *  taobao.tbk.item.info.get (淘宝客商品详情（简版）)
      * @link https://open.taobao.com/api.htm?docId=24518&docType=2&scopeId=11655
-     * @param $num_iids
-     * @param int $platform
-     * @param string $ip
-     * @return bool|mixed
+     * @param array $params
+     * @return bool
      */
-    public function getInfo($num_iids, $platform = 1, $ip = '')
+    public function getInfo(array $params)
     {
-        $params = [
-            'num_iids' => $num_iids,
-            'platform' => $platform,
-            'ip' => $ip
-        ];
+
         $result = $this->send('taobao.tbk.item.info.get', $params);
-        return isset($result['results']['n_tbk_item']) ? $result['results']['n_tbk_item'] : false;
+        return isset($result['results']['n_tbk_item']) ? \current($result['results']['n_tbk_item']) : false;
     }
 
     /**

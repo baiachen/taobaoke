@@ -37,18 +37,12 @@ class Helpers
                 $queryUrl = $urlsInfo['path'];
                 $domain = $urlsInfo['host'];
                 $port = $urlsInfo['scheme'] = 'https' ? 443 : 80;
-                $chan = new \Swoole\Coroutine\Channel(1);
+                $cli = new \Swoole\Coroutine\Http\Client($domain, $port, $port == 443 ? true : false);
+                $cli->set(['timeout' => 3]);
+                $cli->post($queryUrl, $post_data);
+                $output = $cli->body;
+                $cli->close();
 
-
-                go(function () use ($chan, $domain, $queryUrl, $header, $port, $post_data) {
-                    $cli = new \Swoole\Coroutine\Http\Client($domain, $port, $port == 443 ? true : false);
-                    $cli->set(['timeout' => 3]);
-                    $cli->post($queryUrl, $post_data);
-                    $output = $cli->body;
-                    $chan->push($output);
-                    $cli->close();
-                });
-                $output = $chan->pop();
             } else {
                 $output = self::fpm_curl_post($url, $post_data, $header);
             }

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace TaobaoUnionSdk\Api;
+namespace TaoBaoKe\Api;
 
 
-use TaobaoUnionSdk\Tools\GateWay;
+use TaoBaoKe\Tools\GateWay;
 
 class Shop extends GateWay
 {

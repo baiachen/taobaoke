@@ -1,10 +1,10 @@
 <?php
 
 
-namespace TaobaoUnionSdk\Api;
+namespace TaoBaoKe\Api;
 
 
-use TaobaoUnionSdk\Tools\GateWay;
+use TaoBaoKe\Tools\GateWay;
 
 class Coupon extends GateWay
 {
@@ -17,7 +17,7 @@ class Coupon extends GateWay
     public function get(array $params)
     {
         $result = $this->send('taobao.tbk.coupon.get', $params);
-
+        var_dump($result);
         return \current($result);
     }
 }
