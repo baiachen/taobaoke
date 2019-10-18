@@ -32,4 +32,10 @@ class Publisher extends GateWay
         return $result;
     }
 
+    public function AccessToken(array $params)
+    {
+        $result = $this->send('taobao.top.auth.token.create', $params);
+        return $result;
+    }
+
 }
