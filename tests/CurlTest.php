@@ -22,7 +22,7 @@ class CurlTest extends TestCase
     {
         $config = [
             'appkey' => '27858546',
-//                'secretKey' => '5b99bc47e9815a3b6e4c09db41966144',
+            'secretKey' => '',
             'session' => '',//授权接口（sc类的接口）需要带上
             'sandbox' => false,
         ];
